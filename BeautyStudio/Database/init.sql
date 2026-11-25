@@ -9,7 +9,7 @@ ELSE
 BEGIN
     USE IdentityDb;
     
-    -- Търсим таблица 'Roles', а не 'ApplicationRoles'
+
     IF OBJECT_ID(N'dbo.Roles', N'U') IS NULL
     BEGIN
         PRINT 'Roles table does not exist. Skipping seed.';
