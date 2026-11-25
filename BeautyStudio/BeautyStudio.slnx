@@ -1,0 +1,32 @@
+<Solution>
+  <Folder Name="/BuildingBlocks/">
+    <Project Path="BuildingBlocks/Infrastructure/Infrastructure.csproj" />
+    <Project Path="BuildingBlocks/SharedKernel/SharedKernel.csproj" />
+  </Folder>
+  <Folder Name="/Gateway/">
+    <Project Path="Gateway/Gateway/Gateway.csproj" />
+  </Folder>
+  <Folder Name="/Identity/">
+    <Project Path="Identity/Identity.Api/Identity.Api.csproj" />
+    <Project Path="Identity/Identity.Application/Identity.Application.csproj" />
+    <Project Path="Identity/Identity.Domain/Identity.Domain.csproj" />
+    <Project Path="Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Salon/">
+    <Project Path="Salon/Salon.Api/Salon.Api.csproj" />
+    <Project Path="Salon/Salon.Application/Salon.Application.csproj" />
+    <Project Path="Salon/Salon.Domain/Salon.Domain.csproj" />
+    <Project Path="Salon/Salon.Infrastructure/Salon.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/Shop/">
+    <Project Path="Shop/Shop.Api/Shop.Api.csproj" Id="57f738dd-b3fd-4c34-9af1-e3c447938f01" />
+    <Project Path="Shop/Shop.Application/Shop.Application.csproj" Id="5e7f51ca-3a26-46e9-83db-56134227ddb4" />
+    <Project Path="Shop/Shop.Domain/Shop.Domain.csproj" Id="5f7c8f26-3c85-40bc-beff-0343393962c9" />
+    <Project Path="Shop/Shop.Infrastructure/Shop.Infrastructure.csproj" Id="4db4c37d-6409-43b9-9892-b90c65e0df06" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".env" />
+    <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
+  </Folder>
+</Solution>
