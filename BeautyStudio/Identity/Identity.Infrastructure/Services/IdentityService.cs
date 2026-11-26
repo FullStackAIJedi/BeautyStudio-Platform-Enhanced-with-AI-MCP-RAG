@@ -5,9 +5,7 @@
     using Identity.Application.Commands.LoginUser;
     using Identity.Application.Common;
     using Identity.Application.Users;
-    using Identity.Domain.Factories;
-    using Identity.Domain.Models;
-    using Microsoft.AspNetCore.Identity;
+    using Identity.Domain.Factories; 
 
     public class IdentityService : IIdentity
     {
@@ -49,8 +47,7 @@
         }
 
         public async Task<Result<IUser>> RegisterEmployee(UserInputModel input, int roleId)
-        {
-            // Само Boss може да регистрира служители (проверява се в API слоя)
+        { 
             if (roleId < 1 || roleId > 10)
                 return "Invalid role for employee.";
 
@@ -72,7 +69,7 @@
             return Result<IUser>.SuccessWith(new User(user.Id, string.Empty));
         }
 
-        public async Task<Result<LoginSuccessModel>> Login(UserInputModel input)
+        public async Task<Result<LoginSuccessModel>> Login(LoginUserModel input)
         {
             var user = await this.userRepository.FindByEmail(input.Email);
             if (user == null) return "Invalid credentials.";
@@ -89,7 +86,23 @@
 
             var token = await this.tokenGenerator.GenerateToken(user, roleName, roleLevel);
 
-            return new LoginSuccessModel(user.Id, token, roleName, roleLevel);
+            return new LoginSuccessModel(
+                user.Id,
+                
+                token,
+                roleName,
+                roleLevel,
+
+                user.UserName,
+                user.FirstName,
+                user.LastName,
+                user.Email,
+                user.PhoneNumber,
+
+                user.CreatedAt,
+                user.LastLoginAt,
+                user.IsActive,
+                user.IsBlocked);
         }
 
         public async Task<Result> ChangePassword(ChangePasswordInputModel input)
@@ -109,14 +122,27 @@
         {
             var user = await this.userRepository.Find(userId);
             if (user == null) return "User not found.";
-
-            // Проверка за обхват на управление се прави в API слоя
-            // Тук само записваме ролята
+             
             return Result.Success;
         }
 
         public async Task<Result> RemoveRole(int userId, int roleId)
         {
+            return Result.Success;
+        }
+
+        public async Task<Result> EditProfile(
+            int userId, 
+            string firstName, 
+            string lastName, 
+            string phoneNumber)
+        {
+            var user = await this.userRepository.Find(userId);
+            if (user == null) return "User not found.";
+
+            user.UpdateProfile(firstName, lastName, phoneNumber);
+            await this.userRepository.Save(user);
+
             return Result.Success;
         }
     }

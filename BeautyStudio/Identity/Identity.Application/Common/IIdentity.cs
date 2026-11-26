@@ -8,9 +8,10 @@
     {
         Task<Result<IUser>> RegisterClient(UserInputModel userInput);
         Task<Result<IUser>> RegisterEmployee(UserInputModel userInput, int roleId);
-        Task<Result<LoginSuccessModel>> Login(UserInputModel userInput);
+        Task<Result<LoginSuccessModel>> Login(LoginUserModel userInput);
         Task<Result> ChangePassword(ChangePasswordInputModel input);
         Task<Result> AssignRole(int userId, int roleId);
         Task<Result> RemoveRole(int userId, int roleId);
+        Task<Result> EditProfile(int userId, string firstName, string lastName, string phoneNumber);
     }
 }

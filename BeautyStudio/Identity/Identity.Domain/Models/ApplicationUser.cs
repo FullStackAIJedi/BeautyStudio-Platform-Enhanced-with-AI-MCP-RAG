@@ -22,6 +22,7 @@
             this.FirstName = firstName;
             this.LastName = lastName;
             this.PhoneNumber = phoneNumber;
+
             this.PasswordHash = passwordHash;
             this.CreatedAt = DateTime.UtcNow;
             this.IsActive = true;
@@ -37,6 +38,7 @@
             this.FirstName = default!;
             this.LastName = default!;
             this.PhoneNumber = default!;
+
             this.PasswordHash = default!;
             this.userRoles = new HashSet<UserRole>();
         }
@@ -46,6 +48,7 @@
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string PhoneNumber { get; private set; }
+
         public string PasswordHash { get; private set; }
 
         public DateTime CreatedAt { get; private set; }

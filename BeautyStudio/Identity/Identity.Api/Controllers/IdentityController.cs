@@ -1,21 +1,19 @@
 ﻿namespace Identity.Api.Controllers
 {
-    using Microsoft.AspNetCore.Antiforgery;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-
-    using MediatR;
-
     using Identity.Application.Commands.AssignRole;
     using Identity.Application.Commands.ChangePassword;
+    using Identity.Application.Commands.EditProfile;
     using Identity.Application.Commands.LoginUser;
     using Identity.Application.Commands.RegisterClient;
     using Identity.Application.Commands.RegisterEmployee;
     using Identity.Application.Commands.RemoveRole;
-
     using Identity.Application.Queries.GetCurrentUser;
     using Identity.Application.Queries.GetUserById;
     using Identity.Application.Queries.GetUsersList;
+    using MediatR;
+    using Microsoft.AspNetCore.Antiforgery;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -40,7 +38,7 @@
         /// </summary>
         [HttpPost("register-client")]
         [AllowAnonymous]
-        [IgnoreAntiforgeryToken]
+        //[IgnoreAntiforgeryToken]
         public async Task<IActionResult> RegisterClient([FromBody] RegisterClientCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -52,7 +50,7 @@
         /// </summary>
         [HttpPost("register-employee")]
         [Authorize(Roles = "Boss")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterEmployee([FromBody] RegisterEmployeeCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -64,7 +62,7 @@
         /// </summary>
         [HttpPost("login")]
         [AllowAnonymous]
-        [IgnoreAntiforgeryToken]
+        //[IgnoreAntiforgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -104,7 +102,7 @@
         /// </summary>
         [HttpPost("logout")]
         [Authorize]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
             this.Response.Cookies.Delete("access_token");
@@ -117,7 +115,7 @@
         /// </summary>
         [HttpPost("change-password")]
         [Authorize]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -133,6 +131,15 @@
         {
             var result = await this.mediator.Send(new GetCurrentUserQuery());
             return Ok(result);
+        }
+
+        [HttpPut("me")]
+        [Authorize]
+        //[ValidateAntiForgeryToken] // CSRF protection
+        public async Task<IActionResult> EditProfile([FromBody] EditProfileCommand command)
+        {
+            var result = await this.mediator.Send(command);
+            return result.Succeeded ? Ok() : BadRequest(result.Errors);
         }
 
         /// <summary>
@@ -162,7 +169,7 @@
         /// </summary>
         [HttpPost("assign-role")]
         [Authorize(Roles = "Boss")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignRole([FromBody] AssignRoleCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -174,7 +181,7 @@
         /// </summary>
         [HttpPost("remove-role")]
         [Authorize(Roles = "Boss")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveRole([FromBody] RemoveRoleCommand command)
         {
             var result = await this.mediator.Send(command);
@@ -199,6 +206,6 @@
                 Path = "/"
             });
             return Ok();
-        }
+        }  
     }
 }

@@ -3,7 +3,6 @@
     using Identity.Application.Common;
     using MediatR;
 
-    public class LoginUserCommand : UserInputModel, IRequest<Result<LoginSuccessModel>>
-    {
-    }
+    public class LoginUserCommand : LoginUserModel, IRequest<Result<LoginSuccessModel>>
+    { }
 }
